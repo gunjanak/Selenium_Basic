@@ -1,16 +1,10 @@
-#This script visits google scholar 
-#seacrh for articles in cryptography
-#then set the custom range from 1900 to 2008
+#This does not work
 
-#to use chromium with Selenium we need to install
-#sudo apt-get install chromium-chromedriver
-
+# Import the necessary libraries
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from time import sleep
-import time
+from selenium.webdriver.chrome.options import Options
+
 
 #driver.find_element_by_name("Value").send_keys(Keys.RETURN)
 options = Options()
@@ -18,14 +12,19 @@ options.BinaryLocation = "/usr/bin/chromium-browser"
 #options.headless  = True
 
 driver = webdriver.Chrome(executable_path="/usr/bin/chromedriver",options=options)
-driver.get("https://scholar.google.com/")
-time.sleep(5)
-#identify the Google search text box and enter the value  
-#my_element = driver.find_element("name","q")
-#my_element.send_keys('cryptography')
 
+driver.get("https://chromium.googlesource.com/chromium/src/+/master/chrome/test/data/dino/index.html")
 
+# Start the game by pressing the space bar
+driver.find_element_by_tag_name("body").send_keys(Keys.SPACE)
 
-time.sleep(5)
+# Play the game using a simple algorithm
+while True:
+  # Check if the game is over
+  if driver.execute_script("return Runner.instance_.crashed"):
+    # Restart the game by pressing the space bar
+    driver.find_element_by_tag_name("body").send_keys(Keys.SPACE)
+    continue
 
-driver.quit()
+  # Move the dino by pressing the up arrow key
+  driver.find_element_by_tag_name("body").send_keys(Keys.ARROW_UP)
